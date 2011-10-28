@@ -1,0 +1,4 @@
+*.vcxproj.user
+Debug*
+*.sdf
+*.suo
