@@ -2,3 +2,6 @@
 Debug*
 *.sdf
 *.suo
+*.opensdf
+out/
+*.h.gch
