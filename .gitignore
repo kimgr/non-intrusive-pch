@@ -1,7 +1,6 @@
 *.vcxproj.user
-Debug*
 *.sdf
 *.suo
 *.opensdf
-out/
 *.h.gch
+out/
