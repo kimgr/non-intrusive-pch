@@ -1,7 +1,7 @@
 CC=g++
 CFLAGS=-c -Wall -ftime-report
 LDFLAGS=
-OUTDIR=out-no-pch
+OUTDIR=out/gcc-no-pch
 SOURCES=$(wildcard *.cpp)
 OBJECTS=$(SOURCES:.cpp=.o)
 OBJECTPATHS=$(addprefix $(OUTDIR)/, $(OBJECTS))
@@ -11,7 +11,7 @@ ifdef USE_PCH
     PRECOMPILED_HEADER=precompiled.h
     PCH_TARGET=$(PRECOMPILED_HEADER).gch
     CFLAGS+= -include $(PRECOMPILED_HEADER)
-    OUTDIR=out-pch
+    OUTDIR=out/gcc-pch
     $(info Building WITH precompiled headers...)
 else
     $(info Building WITHOUT precompiled headers...)
