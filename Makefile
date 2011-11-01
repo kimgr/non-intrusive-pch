@@ -20,7 +20,7 @@ endif
 all: $(PROG)
 
 $(OUTDIR):
-	mkdir -p $(OUTDIR)
+	mkdir -p $@
 
 $(PROG): $(OBJS)
 	$(CC) $(LDFLAGS) $(OBJS) -o $@
