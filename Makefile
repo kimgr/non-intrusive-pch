@@ -1,4 +1,4 @@
-CC=g++
+CXX=g++
 CFLAGS=-c -Wall
 LDFLAGS=
 SRCS=$(wildcard *.cpp)
@@ -23,13 +23,13 @@ $(OUTDIR):
 	mkdir -p $@
 
 $(PROG): $(OBJS)
-	$(CC) $(LDFLAGS) $(OBJS) -o $@
+	$(CXX) $(LDFLAGS) $(OBJS) -o $@
 
 $(PCH_TARGET): $(PRECOMPILED_HEADER)
-	$(CC) $(CFLAGS) -MMD -MT$(@:.gch=.d) -o $@ $<
+	$(CXX) $(CFLAGS) -MP -MMD -MT$(@:.gch=.d) -o $@ $<
 
 $(OUTDIR)/%.o: %.cpp $(PCH_TARGET) | $(OUTDIR)
-	$(CC) $(CFLAGS) -MMD -MT$(@:.o=.d) -o $@ $< 
+	$(CXX) $(CFLAGS) -MP -MMD -MT$(@:.o=.d) -o $@ $< 
 
 clean:
 	rm -f $(OBJS) $(DEPS) $(PROG) $(PCH_TARGET) $(PCH_TARGET:.gch=.d)
