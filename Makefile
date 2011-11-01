@@ -28,7 +28,7 @@ $(PROG): $(OBJS)
 $(PCH_TARGET): $(PRECOMPILED_HEADER)
 	$(CC) $(CFLAGS) $< -o $@
 
-$(OUTDIR)/%.o: %.cpp $(OUTDIR) $(PCH_TARGET)
+$(OUTDIR)/%.o: %.cpp $(PCH_TARGET) | $(OUTDIR)
 	$(CC) $(CFLAGS) -MMD -MT$(@:.o=.d) -o $@ $< 
 
 -include $(DEPS)
