@@ -26,14 +26,14 @@ $(PROG): $(OBJS)
 	$(CC) $(LDFLAGS) $(OBJS) -o $@
 
 $(PCH_TARGET): $(PRECOMPILED_HEADER)
-	$(CC) $(CFLAGS) $< -o $@
+	$(CC) $(CFLAGS) -MMD -MT$(@:.gch=.d) -o $@ $<
 
 $(OUTDIR)/%.o: %.cpp $(PCH_TARGET) | $(OUTDIR)
 	$(CC) $(CFLAGS) -MMD -MT$(@:.o=.d) -o $@ $< 
 
--include $(DEPS)
-
-.PHONY: clean
-
 clean:
-	rm -f $(OBJS) $(DEPS) $(PROG) $(PCH_TARGET)
+	rm -f $(OBJS) $(DEPS) $(PROG) $(PCH_TARGET) $(PCH_TARGET:.gch=.d)
+
+.PHONY: clean all
+
+-include $(DEPS)
