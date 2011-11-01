@@ -2,5 +2,5 @@
 *.sdf
 *.suo
 *.opensdf
-*.h.gch
 out/
+precompiled.h.*
