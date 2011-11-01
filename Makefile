@@ -1,10 +1,8 @@
 CC=g++
-CFLAGS=-c -Wall -ftime-report
+CFLAGS=-c -Wall
 LDFLAGS=
-OUTDIR=out/gcc-no-pch
 SOURCES=$(wildcard *.cpp)
-OBJECTS=$(SOURCES:.cpp=.o)
-OBJECTPATHS=$(addprefix $(OUTDIR)/, $(OBJECTS))
+OBJECTS=$(addprefix $(OUTDIR)/, $(SOURCES:.cpp=.o))
 EXECUTABLE=$(OUTDIR)/non-intrusive-pch.exe
 
 ifdef USE_PCH
@@ -15,6 +13,7 @@ ifdef USE_PCH
     $(info Building WITH precompiled headers...)
 else
     $(info Building WITHOUT precompiled headers...)
+    OUTDIR=out/gcc-no-pch
 endif
 
 all: $(EXECUTABLE)
@@ -22,16 +21,16 @@ all: $(EXECUTABLE)
 $(OUTDIR):
 	mkdir -p $(OUTDIR)
 
-$(EXECUTABLE): $(OBJECTS) $(OUTDIR)
-	$(CC) $(LDFLAGS) $(OBJECTPATHS) -o $@
-
-%.o: %.cpp $(OUTDIR) $(PCH_TARGET)
-	$(CC) $(CFLAGS) $< -o $(OUTDIR)/$@
+$(EXECUTABLE): $(OBJECTS)
+	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
 
 $(PCH_TARGET): $(PRECOMPILED_HEADER)
 	$(CC) $(CFLAGS) $< -o $@
 
-clean:
-	rm -f $(OBJECTPATHS) $(EXECUTABLE) $(PCH_TARGET)
+$(OUTDIR)/%.o: %.cpp $(OUTDIR) $(PCH_TARGET)
+	$(CC) $(CFLAGS) $< -o $@
 
-.PHONY: clean
+clean:
+	rm -f $(OBJECTS) $(EXECUTABLE) $(PCH_TARGET)
+
+.PHONY: clean all
