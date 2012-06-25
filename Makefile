@@ -7,14 +7,14 @@ OBJS=$(addprefix $(OUTDIR)/, $(SRCS:.cpp=.o))
 PROG=$(OUTDIR)/non-intrusive-pch.exe
 
 ifdef USE_PCH
-PRECOMPILED_HEADER=precompiled.h
-PCH_TARGET=$(PRECOMPILED_HEADER).gch
-CFLAGS+= -include $(PRECOMPILED_HEADER)
-OUTDIR=out/gcc-pch
-$(info Building WITH precompiled headers...)
+  PRECOMPILED_HEADER=precompiled.h
+  PCH_TARGET=$(PRECOMPILED_HEADER).gch
+  CFLAGS+= -include $(PRECOMPILED_HEADER)
+  OUTDIR=out/gcc-pch
+  $(info Building WITH precompiled headers...)
 else
-$(info Building WITHOUT precompiled headers...)
-OUTDIR=out/gcc-no-pch
+  $(info Building WITHOUT precompiled headers...)
+  OUTDIR=out/gcc-no-pch
 endif
 
 all: $(PROG)
